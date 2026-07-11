@@ -12,8 +12,8 @@ env:
   IMAGE_NAME_TAGGED: shiladitya997/java-rest-api:${{ github.sha }}
   IMAGE_NAME_LATEST: shiladitya997/java-rest-api:latest
 
-permissions: 
-  contents: read
+permissions:
+  contents: write
 
 jobs:
   build-scan-upload:
@@ -59,6 +59,19 @@ jobs:
       run: |
         docker push ${{ env.IMAGE_NAME_TAGGED }}
         docker push ${{ env.IMAGE_NAME_LATEST }}
+
+    - name: Update deployment image for Argo CD
+      if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+      run: |
+        sed -i "s#^  IMAGE_NAME: .*#  IMAGE_NAME: ${{ env.IMAGE_NAME_TAGGED }}#" k8s/configmap.yaml
+
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add k8s/configmap.yaml
+        git diff --cached --quiet || {
+          git commit -m "chore: deploy image ${{ github.sha }} [skip ci]"
+          git push origin HEAD:main
+        }
     
     - name: Logout from DockerHub
       run: |
