@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml
+  - service.yaml
+  - configmap.yaml
+replacements:
+  - source:
+      kind: ConfigMap
+      name: java-rest-api-config
+      fieldPath: data.IMAGE_NAME
+    targets:
+      - select:
+          kind: Deployment
+          name: java-rest-api
+        fieldPaths:
+          - spec.template.spec.containers.0.image
