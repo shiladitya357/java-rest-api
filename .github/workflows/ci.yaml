@@ -31,10 +31,10 @@ jobs:
         cache: maven
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn clean package
 
     - name: Test with Maven
-      run: mvn test
+      run: mvn clean test
 
     - name: Build Docker Image
       run: |
