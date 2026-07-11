@@ -38,6 +38,20 @@ You can provide your own request ID:
 curl -H "X-Request-Id: demo-123" http://localhost:5050/broker/alice
 ```
 
+## Tracing with Jaeger
+
+The application now exports distributed traces to Jaeger over OTLP. When you start the stack with Docker Compose, a Jaeger container is also launched.
+
+- Application UI: http://localhost:5050
+- Jaeger UI: http://localhost:16686
+
+If you run the app locally outside Docker, set the environment variable before starting it:
+
+```bash
+export OTLP_TRACING_ENDPOINT=http://localhost:4318/v1/traces
+mvn spring-boot:run
+```
+
 ## Logs
 
 Logs are written to:

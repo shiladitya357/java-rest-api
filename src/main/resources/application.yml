@@ -17,6 +17,12 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+  otlp:
+    tracing:
+      endpoint: ${OTLP_TRACING_ENDPOINT:http://host.docker.internal:4318/v1/traces}
+  tracing:
+    sampling:
+      probability: 1.0
 
 logging:
   level:

@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: java-rest-api
+    # environment:
+    #   OTLP_TRACING_ENDPOINT: http://jaeger:4318/v1/traces
     ports:
       - "5050:5050"
     volumes:
