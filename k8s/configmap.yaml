@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: java-rest-api-config
 data:
-  IMAGE_NAME: shiladitya997/java-rest-api:latest
+  IMAGE_NAME: shiladitya997/java-rest-api:3bf2b71308d6854b8528d8845e8f4ad2778a2d7b
